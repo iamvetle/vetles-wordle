@@ -1,0 +1,89 @@
+* {
+	box-sizing: border-box;
+	font-family: "Elms Sans", Arial, Helvetica, sans-serif;
+	font-weight: 500;
+}
+
+.container {
+	width: fit-content;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 40px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.row {
+	display: flex;
+	gap: 5px;
+	margin-bottom: 5px;
+}
+
+.box {
+	width: 60px;
+	height: 60px;
+	border: lightgray solid;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 34px;
+}
+
+.letters-first-row,
+.letters-second-row,
+.letters-third-row {
+	display: flex;
+	justify-content: center;
+	gap: 5px;
+}
+
+.letters-second-row,
+.letters-third-row {
+	margin-top: 5px;
+}
+
+.letters-container {
+	margin-top: 50px;
+}
+
+.letter {
+	background-color: #d3d6da;
+	padding-right: 7px;
+	padding-left: 7px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 24px;
+	display: flex;
+	align-items: center;
+	border-radius: 2px;
+	cursor: pointer;
+	justify-content: center;
+	width: 30px;
+}
+
+#enter-letter,
+#delete-letter {
+	font-size: 10px;
+	padding-right: 3px;
+	padding-left: 3px;
+	width: fit-content;
+}
+
+.correct-letter-correct-place {
+	color: white !important;
+	background-color: #538d4e !important;
+	border: none !important;
+}
+
+.correct-letter-wrong-place {
+	color: white !important;
+	background-color: #c9b458 !important;
+	border: none !important;
+}
+
+.wrong-letter {
+	color: white !important;
+	background-color: #787c7e !important;
+	border: none !important;
+}
