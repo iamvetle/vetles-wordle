@@ -47,29 +47,35 @@ function enterClick() {
 
 	let theGuess = "";
 
-	/* Creates the guess word */
+	/* 
+	Creates the guess word
+	
+	? don't know if this is the best way to do it
+	*/
 	for (let i = 1; i <= 5; i++) {
 		const box = document.getElementById(`row${currentRow}-${i}`);
 
 		theGuess += box.innerHTML;
 	}
 
-	if (!fiveWordsdict.includes(theGuess)) {
-		alert("That was not an actual word.");
+	if (!fiveWordsdict.includes(theGuess.toLowerCase())) {
+		console.log("That was not an actual word.");
 		return;
 	}
 
 	/* Goes through all the boxes and checks if it is correct in comperrasion to the wordle word*/
 
-	for (let i = 0; i <= 5; i++) {
-		if (theGuess[i] == wordleWord[i]) {
+	for (let i = 1; i <= 5; i++) {
+		const box = document.getElementById(`row${currentRow}-${i}`);
+
+		if (box.innerHTML == wordleWord[i]) {
 			box.classList.add("correct-letter-correct-place");
-			correctLetters.push(theGuess[i]);
-		} else if (wordleWord.includes(theGuess[i])) {
-			correctLettersWrongPlace.push(theGuess[i]);
+			correctLetters.push(box.innerHTML);
+		} else if (wordleWord.includes(box.innerHTML)) {
+			correctLettersWrongPlace.push(box.innerHTML);
 			box.classList.add("correct-letter-wrong-place");
 		} else {
-			wrongLetters.push(theGuess[i]);
+			wrongLetters.push(box.innerHTML);
 			box.classList.add("wrong-letter");
 		}
 	}

@@ -8,6 +8,7 @@ document.addEventListener("keyup", (event) => {
 	if (event.key == "Enter") {
 		enterClick();
 	}
+
 	if (englishLetters.includes(event.key.toUpperCase())) {
 		letterClick(event.key.toUpperCase());
 	}
