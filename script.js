@@ -1,4 +1,4 @@
-const wordleWord = "BRAVE";
+// const wordleWord = "BRAVE";
 
 var currentRow = 1;
 var currentColoumn = 1;
