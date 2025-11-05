@@ -47,19 +47,29 @@ function enterClick() {
 
 	let theGuess = "";
 
+	/* Creates the guess word */
 	for (let i = 1; i <= 5; i++) {
 		const box = document.getElementById(`row${currentRow}-${i}`);
 
 		theGuess += box.innerHTML;
+	}
 
-		if (box.innerHTML == wordleWord[i - 1]) {
+	if (!fiveWordsdict.includes(theGuess)) {
+		alert("That was not an actual word.");
+		return;
+	}
+
+	/* Goes through all the boxes and checks if it is correct in comperrasion to the wordle word*/
+
+	for (let i = 0; i <= 5; i++) {
+		if (theGuess[i] == wordleWord[i]) {
 			box.classList.add("correct-letter-correct-place");
-			correctLetters.push(box.innerHTML);
-		} else if (wordleWord.includes(box.innerHTML)) {
-			correctLettersWrongPlace.push(box.innerHTML);
+			correctLetters.push(theGuess[i]);
+		} else if (wordleWord.includes(theGuess[i])) {
+			correctLettersWrongPlace.push(theGuess[i]);
 			box.classList.add("correct-letter-wrong-place");
 		} else {
-			wrongLetters.push(box.innerHTML);
+			wrongLetters.push(theGuess[i]);
 			box.classList.add("wrong-letter");
 		}
 	}
@@ -76,8 +86,10 @@ function enterClick() {
 		alert("Congratulations you won!");
 	}
 
-	if (currentRow == 7) {
-		alert(`You lost. You are out of tries. The word was "${wordleWord}".`);
+	if (currentRow == 7 && victory == false) {
+		console.log(
+			`You lost. You are out of tries. The word was "${wordleWord}".`
+		);
 	}
 }
 
@@ -87,10 +99,21 @@ function deleteClick() {
 		return;
 	}
 
+	console.log("current column", currentColoumn);
+
+	let lastFullBox;
+
 	/* Finds and empties the latest filled box */
-	const lastFullBox = document.getElementById(
+	lastFullBox = document.getElementById(
 		`row${currentRow}-${currentColoumn - 1}`
 	);
+
+	if (currentColoumn == 1) {
+		lastFullBox = document.getElementById(
+			`row${currentRow}-${currentColoumn}`
+		);
+	}
+
 	lastFullBox.innerHTML = "";
 
 	/* Makes sure currentColumn doesnt come to 0*/

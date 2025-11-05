@@ -1,4 +1,5 @@
 var wordleWord;
+let fiveWordsdict;
 
 fetch("/five-word-dict.json")
 	.then((response) => {
@@ -12,6 +13,7 @@ fetch("/five-word-dict.json")
 	.then((data) => {
 		const randomIndex = Math.floor(Math.random() * data.length);
 		wordleWord = data[randomIndex].toUpperCase();
+		fiveWordsdict = data;
 	})
 	.catch((error) => {
 		console.error("There was a problem with the fetch operation:", error);
