@@ -30,32 +30,13 @@ let correctLettersWrongPlace = [];
 let wrongLetters = [];
 
 function enterClick() {
-	/* If you already have won you can't play*/
-	if (victory == true) {
-		return;
-	}
-
-	/* Makes sure that the row is filled before proceding */
-	if (currentColoumn < 6) {
-		return;
-	}
-
-	/* Makes sure that not all the chances have been used up*/
-	if (currentRow > 6) {
-		return;
-	}
+	if (victory) return;
+	if (currentColoumn < 6) return;
+	if (currentRow > 6) return;
 
 	let theGuess = "";
-
-	/* 
-	Creates the guess word
-	
-	? don't know if this is the best way to do it
-	*/
 	for (let i = 1; i <= 5; i++) {
-		const box = document.getElementById(`row${currentRow}-${i}`);
-
-		theGuess += box.innerHTML;
+		theGuess += document.getElementById(`row${currentRow}-${i}`).innerHTML;
 	}
 
 	if (!fiveWordsdict.includes(theGuess.toLowerCase())) {
@@ -63,28 +44,43 @@ function enterClick() {
 		return;
 	}
 
-	/* Goes through all the boxes and checks if it is correct in comperrasion to the wordle word*/
+	// Step 1: Prepare arrays and counters
+	const target = wordleWord.split("");
+	const guess = theGuess.split("");
 
-	for (let i = 1; i <= 5; i++) {
-		const box = document.getElementById(`row${currentRow}-${i}`);
+	// Count letters in target
+	const letterCounts = {};
+	for (let letter of target) {
+		letterCounts[letter] = (letterCounts[letter] || 0) + 1;
+	}
 
-		if (box.innerHTML == wordleWord[i]) {
+	// Step 2: First pass - correct letters in correct place
+	for (let i = 0; i < 5; i++) {
+		const box = document.getElementById(`row${currentRow}-${i + 1}`);
+		if (guess[i] === target[i]) {
 			box.classList.add("correct-letter-correct-place");
-			correctLetters.push(box.innerHTML);
-		} else if (wordleWord.includes(box.innerHTML)) {
-			correctLettersWrongPlace.push(box.innerHTML);
-			box.classList.add("correct-letter-wrong-place");
-		} else {
-			wrongLetters.push(box.innerHTML);
-			box.classList.add("wrong-letter");
+			correctLetters.push(guess[i]);
+			letterCounts[guess[i]] -= 1; // consume one occurrence
+			guess[i] = null; // mark as handled
 		}
 	}
-	fixLetterColors();
 
-	/* Increases the row to the next try*/
+	// Step 3: Second pass - correct letters in wrong place
+	for (let i = 0; i < 5; i++) {
+		const box = document.getElementById(`row${currentRow}-${i + 1}`);
+		const letter = guess[i];
+
+		if (letter && letterCounts[letter] > 0) {
+			box.classList.add("correct-letter-wrong-place");
+			correctLettersWrongPlace.push(letter);
+			letterCounts[letter] -= 1; // consume one occurrence
+		} else if (letter) {
+			box.classList.add("wrong-letter");
+			wrongLetters.push(letter);
+		}
+	}
+
 	currentRow += 1;
-
-	/* Also makes sure the row starts at zero*/
 	currentColoumn = 1;
 
 	if (theGuess === wordleWord) {
@@ -92,10 +88,8 @@ function enterClick() {
 		alert("Congratulations you won!");
 	}
 
-	if (currentRow == 7 && victory == false) {
-		console.log(
-			`You lost. You are out of tries. The word was "${wordleWord}".`
-		);
+	if (currentRow == 7 && !victory) {
+		console.log(`You lost. The word was "${wordleWord}".`);
 	}
 }
 
@@ -153,3 +147,66 @@ function fixLetterColors() {
 		letter.classList.add("correct-letter-correct-place");
 	}
 }
+
+/* 
+Replace enterClick with this to make it Back to how I made it. I'm not sure how the new code prevents the double yellow problem.
+
+
+function enterClick() {
+	if (victory == true) {
+		return;
+	}
+
+	if (currentColoumn < 6) {
+		return;
+	}
+
+	if (currentRow > 6) {
+		return;
+	}
+
+	let theGuess = "";
+
+	for (let i = 1; i <= 5; i++) {
+		const box = document.getElementById(`row${currentRow}-${i}`);
+
+		theGuess += box.innerHTML;
+	}
+
+	if (!fiveWordsdict.includes(theGuess.toLowerCase())) {
+		console.log("That was not an actual word.");
+		return;
+	}
+
+	for (let i = 1; i <= 5; i++) {
+		const box = document.getElementById(`row${currentRow}-${i}`);
+
+		if (box.innerHTML == wordleWord[i]) {
+			box.classList.add("correct-letter-correct-place");
+			correctLetters.push(box.innerHTML);
+		} else if (wordleWord.includes(box.innerHTML)) {
+			correctLettersWrongPlace.push(box.innerHTML);
+			box.classList.add("correct-letter-wrong-place");
+		} else {
+			wrongLetters.push(box.innerHTML);
+			box.classList.add("wrong-letter");
+		}
+	}
+	fixLetterColors();
+
+	currentRow += 1;
+
+	currentColoumn = 1;
+
+	if (theGuess === wordleWord) {
+		victory = true;
+		alert("Congratulations you won!");
+	}
+
+	if (currentRow == 7 && victory == false) {
+		console.log(
+			`You lost. You are out of tries. The word was "${wordleWord}".`
+		);
+	}
+}
+*/
