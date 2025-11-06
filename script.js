@@ -87,6 +87,7 @@ function enterClick() {
 
 	if (theGuess === wordleWord) {
 		victory = true;
+		addNewStreak();
 		alert("Congratulations you won!");
 	}
 

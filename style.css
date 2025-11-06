@@ -42,11 +42,6 @@
 .letters-third-row {
 	margin-top: 5px;
 }
-
-.letters-container {
-	margin-top: 50px;
-}
-
 .letter {
 	background-color: #d3d6da;
 	padding-right: 7px;
@@ -86,4 +81,11 @@
 	color: white !important;
 	background-color: #787c7e !important;
 	border: none !important;
+}
+
+.streak-and-letters-container {
+	margin-top: 40px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
