@@ -91,7 +91,7 @@ function enterClick() {
 	}
 
 	if (currentRow == 7 && !victory) {
-		console.log(`You lost. The word was "${wordleWord}".`);
+		alert(`You lost. The word was "${wordleWord}".`);
 	}
 }
 
