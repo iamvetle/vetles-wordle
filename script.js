@@ -102,8 +102,6 @@ function deleteClick() {
 		return;
 	}
 
-	console.log("current column", currentColoumn);
-
 	let lastFullBox;
 
 	/* Finds and empties the latest filled box */
