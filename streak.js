@@ -76,7 +76,7 @@ function addNewStreak() {
 const streakDiv = document.getElementById("streak");
 
 function setStreakDivAs(streakNumber) {
-	streakDiv.innerHTML = `🔥Streak: ${streakNumber}`;
+	streakDiv.innerHTML = `🔥Daily Streak: ${streakNumber}`;
 }
 
 getCurrentStreak();
