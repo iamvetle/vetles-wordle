@@ -80,6 +80,8 @@ function enterClick() {
 		}
 	}
 
+	fixLetterColors();
+
 	currentRow += 1;
 	currentColoumn = 1;
 
