@@ -23,6 +23,9 @@ function letterClick(letter) {
 
 	/* Updates to the next box in the row*/
 	currentColoumn += 1;
+
+	/* Makes the letterbox have a type of style when it is filled */
+	currentBox.style = "border: solid 2px;";
 }
 
 let correctLetters = [];
@@ -122,6 +125,9 @@ function deleteClick() {
 	}
 
 	lastFullBox.innerHTML = "";
+
+	/* Makes the style when a letterbox is filled dissapear */
+	lastFullBox.style = "border:lightgray solid;";
 
 	/* Makes sure currentColumn doesnt come to 0*/
 	if (currentColoumn == 1) {
