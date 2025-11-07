@@ -96,6 +96,9 @@ async function enterClick() {
 
 	if (currentRow == 7 && !victory) {
 		alert(`You lost. The word was "${wordleWord}".`);
+
+		const def = await fetchDefinition(wordleWord);
+		alert(`The word "${wordleWord.toLowerCase()}" means: \n\n${def}`);
 	}
 }
 
