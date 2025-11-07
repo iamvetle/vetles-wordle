@@ -7,7 +7,6 @@ function getCurrentStreak() {
 	today.setHours(0, 0, 0, 0);
 	const yesterday = new Date(today);
 
-	// Dette kan gjøre skape feil når datoen er 1.
 	yesterday.setDate(today.getDate() - 1);
 
 	console.log(

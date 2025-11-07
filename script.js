@@ -29,7 +29,7 @@ let correctLetters = [];
 let correctLettersWrongPlace = [];
 let wrongLetters = [];
 
-function enterClick() {
+async function enterClick() {
 	if (victory) return;
 	if (currentColoumn < 6) return;
 	if (currentRow > 6) return;
@@ -89,6 +89,9 @@ function enterClick() {
 		victory = true;
 		addNewStreak();
 		alert("Congratulations you won!");
+
+		const def = await fetchDefinition(wordleWord);
+		alert(`The word "${wordleWord.toLowerCase()}" means: \n\n${def}`);
 	}
 
 	if (currentRow == 7 && !victory) {
