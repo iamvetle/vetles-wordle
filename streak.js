@@ -4,9 +4,17 @@ function getCurrentStreak() {
 	const json = localStorage.getItem("vetlesWordleStreak");
 
 	const today = new Date();
-	const yesterday = new Date(today);
-	yesterday.setDate(today.getDate() - 1);
 	today.setHours(0, 0, 0, 0);
+	const yesterday = new Date(today);
+
+	// Dette kan gjøre skape feil når datoen er 1.
+	yesterday.setDate(today.getDate() - 1);
+
+	console.log(
+		`todays time: ${today.getTime()}, yesterday ${yesterday.getTime()}, json: ${
+			JSON.parse(json).date
+		}`
+	);
 
 	/* Checks if there is any saved streak */
 	if (!json) {
@@ -24,6 +32,8 @@ function getCurrentStreak() {
 		today.getTime() > JSON.parse(json).date &&
 		yesterday.getTime() > JSON.parse(json).date
 	) {
+		console.log("yesterdays time was too big");
+
 		const today = new Date();
 		today.setHours(0, 0, 0, 0);
 
