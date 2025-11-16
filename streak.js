@@ -9,11 +9,11 @@ function getCurrentStreak() {
 
 	yesterday.setDate(today.getDate() - 1);
 
-	console.log(
-		`todays time: ${today.getTime()}, yesterday ${yesterday.getTime()}, json: ${
-			JSON.parse(json).date
-		}`
-	);
+	// console.log(
+	// 	`todays time: ${today.getTime()}, yesterday ${yesterday.getTime()}, json: ${
+	// 		JSON.parse(json).date
+	// 	}`
+	// );
 
 	/* Checks if there is any saved streak */
 	if (!json) {

@@ -53,9 +53,21 @@ async function closeCenter(element) {
 }
 
 async function enterClick() {
-	if (victory) return;
-	if (currentColoumn < 6) return;
-	if (currentRow > 6) return;
+	// So that I can't type something else while all of this is being done
+	waitingForEnter = true;
+
+	if (victory) {
+		waitingForEnter = false;
+		return;
+	}
+	if (currentColoumn < 6) {
+		waitingForEnter = false;
+		return;
+	}
+	if (currentRow > 6) {
+		waitingForEnter = false;
+		return;
+	}
 
 	let theGuess = "";
 	for (let i = 1; i <= 5; i++) {
@@ -66,7 +78,7 @@ async function enterClick() {
 		console.log("That was not an actual word.");
 
 		shakeTheRow();
-
+		waitingForEnter = false;
 		return;
 	}
 
@@ -124,9 +136,9 @@ async function enterClick() {
 		// const objectValue = classForRows[i].class;
 		// box.classList.add(objectValue);
 
-		// const object = classForRows.find((o) => o.row == i + 1);
+		const object = classForRows.find((o) => o.row == i + 1);
 
-		// box.classList.add(object.class);
+		box.classList.add(object.class);
 
 		// For animation
 		await closeCenter(box);
@@ -157,6 +169,8 @@ async function enterClick() {
 			alert(`The word "${wordleWord.toLowerCase()}" means: \n\n${def}`);
 		}
 	}
+
+	waitingForEnter = false;
 }
 
 function deleteClick() {
