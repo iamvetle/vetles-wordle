@@ -89,3 +89,45 @@
 	flex-direction: column;
 	gap: 10px;
 }
+
+.shake-row {
+	animation-name: moveFastHorizontally;
+	animation-duration: 0.2s;
+	animation-timing-function: linear;
+	animation-iteration-count: 2;
+	animation-direction: normal; /* not alternate */
+	animation-fill-mode: forwards;
+}
+
+@keyframes moveFastHorizontally {
+	0% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(-6px);
+	}
+	75% {
+		transform: translateX(6px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.close-center {
+	animation-name: closeToCenter;
+	animation-duration: 0.5s;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes closeToCenter {
+	0% {
+		transform: scaleY(1);
+	}
+	50% {
+		transform: scaleY(0);
+	}
+	100% {
+		transform: scaleY(1);
+	}
+}

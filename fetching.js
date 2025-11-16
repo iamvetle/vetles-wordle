@@ -34,7 +34,7 @@ fetch("/quess-bank.json")
 		console.error("There was a problem with the fetch operation:", error);
 	});
 
-async function fetchDefinition(word) {
+async function retrieveDictionary() {
 	return fetch("/dictionary.json")
 		.then((response) => {
 			if (!response.ok) {
@@ -45,10 +45,7 @@ async function fetchDefinition(word) {
 			return response.json(); // Already parsed JSON
 		})
 		.then((data) => {
-			console.log(word.toLowerCase());
-			console.log(typeof data[word.toLowerCase()]);
-
-			return data[word.toLowerCase()];
+			return data;
 		})
 		.catch((error) => {
 			console.error(
@@ -56,4 +53,16 @@ async function fetchDefinition(word) {
 				error
 			);
 		});
+}
+
+let dictionary;
+
+async function init() {
+	dictionary = await retrieveDictionary();
+}
+
+init();
+
+function fetchDefinition(word) {
+	return dictionary[word.toLowerCase()];
 }

@@ -32,6 +32,26 @@ let correctLetters = [];
 let correctLettersWrongPlace = [];
 let wrongLetters = [];
 
+function shakeTheRow() {
+	const row = document.getElementById(`row-${currentRow}`);
+
+	row.classList.add("shake-row");
+
+	setTimeout(() => {
+		row.classList.remove("shake-row");
+	}, 500);
+}
+
+function delay(ms) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function closeCenter(element) {
+	element.classList.add("close-center");
+	await delay(505);
+	element.classList.remove("close-center");
+}
+
 async function enterClick() {
 	if (victory) return;
 	if (currentColoumn < 6) return;
@@ -44,6 +64,9 @@ async function enterClick() {
 
 	if (!fiveWordsdict.includes(theGuess.toLowerCase())) {
 		console.log("That was not an actual word.");
+
+		shakeTheRow();
+
 		return;
 	}
 
@@ -57,11 +80,16 @@ async function enterClick() {
 		letterCounts[letter] = (letterCounts[letter] || 0) + 1;
 	}
 
+	const classForRows = [];
+
 	// Step 2: First pass - correct letters in correct place
 	for (let i = 0; i < 5; i++) {
-		const box = document.getElementById(`row${currentRow}-${i + 1}`);
 		if (guess[i] === target[i]) {
-			box.classList.add("correct-letter-correct-place");
+			classForRows.push({
+				row: i + 1,
+				class: "correct-letter-correct-place",
+			});
+
 			correctLetters.push(guess[i]);
 			letterCounts[guess[i]] -= 1; // consume one occurrence
 			guess[i] = null; // mark as handled
@@ -70,17 +98,38 @@ async function enterClick() {
 
 	// Step 3: Second pass - correct letters in wrong place
 	for (let i = 0; i < 5; i++) {
-		const box = document.getElementById(`row${currentRow}-${i + 1}`);
 		const letter = guess[i];
 
 		if (letter && letterCounts[letter] > 0) {
-			box.classList.add("correct-letter-wrong-place");
+			classForRows.push({
+				row: i + 1,
+				class: "correct-letter-wrong-place",
+			});
+
 			correctLettersWrongPlace.push(letter);
 			letterCounts[letter] -= 1; // consume one occurrence
 		} else if (letter) {
-			box.classList.add("wrong-letter");
+			classForRows.push({
+				row: i + 1,
+				class: "wrong-letter",
+			});
+
 			wrongLetters.push(letter);
 		}
+	}
+
+	for (let i = 0; i < 5; i++) {
+		const box = document.getElementById(`row${currentRow}-${i + 1}`);
+
+		// const objectValue = classForRows[i].class;
+		// box.classList.add(objectValue);
+
+		// const object = classForRows.find((o) => o.row == i + 1);
+
+		// box.classList.add(object.class);
+
+		// For animation
+		await closeCenter(box);
 	}
 
 	fixLetterColors();
@@ -93,7 +142,7 @@ async function enterClick() {
 		addNewStreak();
 		alert("Congratulations you won!");
 
-		const def = await fetchDefinition(wordleWord);
+		const def = fetchDefinition(wordleWord);
 
 		if (def) {
 			alert(`The word "${wordleWord.toLowerCase()}" means: \n\n${def}`);
@@ -103,7 +152,7 @@ async function enterClick() {
 	if (currentRow == 7 && !victory) {
 		alert(`You lost. The word was "${wordleWord}".`);
 
-		const def = await fetchDefinition(wordleWord);
+		const def = fetchDefinition(wordleWord);
 		if (def) {
 			alert(`The word "${wordleWord.toLowerCase()}" means: \n\n${def}`);
 		}
